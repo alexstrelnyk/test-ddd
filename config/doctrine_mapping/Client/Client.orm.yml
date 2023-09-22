@@ -1,0 +1,21 @@
+App\Domain\Client\Entity\Client:
+  type: entity
+  table: clients
+  id:
+    uuid:
+      type: uuid_client
+      generator:
+        strategy: none
+  fields:
+    firstName:
+      type: string
+      length: 50
+      column: first_name
+    lastName:
+      type: string
+      length: 50
+      column: last_name
+  oneToMany:
+    shippingAddresses:
+      targetEntity: App\Domain\ShippingAddress\Entity\ShippingAddress
+      mappedBy: client

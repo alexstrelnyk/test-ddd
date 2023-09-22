@@ -1,0 +1,40 @@
+services:
+
+  App\Infrastructure\Delivery\Api\:
+    resource: '../src/Infrastructure/Delivery/Api'
+    tags: ['controller.service_arguments']
+
+  App\Infrastructure\Delivery:
+    class: App\Infrastructure\Delivery\ExceptionListener
+    tags:
+      - { name: kernel.event_listener, event: kernel.exception }
+
+  App\Infrastructure\Persistence\Doctrine\Fixtures\:
+    resource: '../src/Infrastructure/Persistence/Doctrine/Fixtures'
+    tags: ['doctrine.fixture.orm']
+
+# Client
+
+  App\Domain\Client\Repository\ClientRepositoryInterface:
+    class: App\Infrastructure\Persistence\Doctrine\ClientRepository
+    autowire: true
+
+  App\Application\ClientInterface:
+    class: App\Application\Client
+    arguments: ['@App\Domain\Client\Repository\ClientRepositoryInterface']
+    public: true
+
+# ShippingAddress
+
+  App\Domain\ShippingAddress\Repository\ShippingAddressRepositoryInterface:
+    class: App\Infrastructure\Persistence\Doctrine\ShippingAddressRepository
+    autowire: true
+
+  App\Application\ShippingAddressInterface:
+    class: App\Application\ShippingAddress
+    arguments:
+      - '@App\Domain\Client\Repository\ClientRepositoryInterface'
+      - '@App\Domain\ShippingAddress\Repository\ShippingAddressRepositoryInterface'
+    public: true
+
+

@@ -1,0 +1,29 @@
+doctrine:
+    dbal:
+        driver: 'pdo_mysql'
+        server_version: '5.7.27'
+        charset: utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_unicode_ci
+        types:
+#            uuid:  Ramsey\Uuid\Doctrine\UuidType
+            uuid_client: App\Infrastructure\Persistence\Doctrine\Types\ClientIdType
+            uuid_address: App\Infrastructure\Persistence\Doctrine\Types\ShippingAddressIdType
+
+        url: '%env(resolve:DATABASE_URL)%'
+    orm:
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+        mappings:
+            App\Domain\Client:
+                type: yml
+                dir: "%kernel.project_dir%/config/doctrine_mapping/Client"
+                is_bundle: false
+                prefix: App\Domain\Client\Entity
+            App\Domain\ShippingAddress:
+                type: yml
+                dir: "%kernel.project_dir%/config/doctrine_mapping/ShippingAddress"
+                is_bundle: false
+                prefix: App\Domain\ShippingAddress\Entity

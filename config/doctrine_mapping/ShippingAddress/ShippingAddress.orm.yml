@@ -1,0 +1,33 @@
+App\Domain\ShippingAddress\Entity\ShippingAddress:
+  type: entity
+  table: shipping_address
+  id:
+    uuid:
+      type: uuid_address
+      generator:
+        strategy: none
+  fields:
+    country:
+      type: string
+      length: 150
+    city:
+      type: string
+      length: 150
+    street:
+      type: string
+      length: 150
+    zipCode:
+      type: string
+      length: 150
+      column: zip_code
+    isDefault:
+      type: boolean
+      column: is_default
+  manyToOne:
+    client:
+      targetEntity: App\Domain\Client\Entity\Client
+      inversedBy: shippingAddresses
+      joinColumn:
+        name: client_uuid
+        referencedColumnName: uuid
+

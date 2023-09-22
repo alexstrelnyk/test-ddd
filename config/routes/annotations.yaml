@@ -1,0 +1,3 @@
+controllers:
+    resource: ../../src/Infrastructure/Delivery/Api/
+    type: annotation
